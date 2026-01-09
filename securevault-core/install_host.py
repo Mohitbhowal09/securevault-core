@@ -26,8 +26,8 @@ def install():
     
     target_file = os.path.join(target_dir, f"{HOST_NAME}.json")
     
-    # Path to the python script
-    host_script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "native_host", "host.py"))
+    # Path to the wrapper script (more robust than direct python invocation)
+    host_script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "native_host", "run_host.sh"))
     
     # Manifest content
     manifest = {
