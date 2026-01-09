@@ -1,0 +1,36 @@
+appId: com.securevault.desktop
+productName: SecureVault
+copyright: Copyright © 2026 SecureVault Team
+
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - "**/*"
+  - "!dist"
+  - "!**/*.py"
+  - "!**/*.spec"
+
+extraResources:
+  - from: "../securevault-core/dist/securevault-host"
+    to: "securevault-host"
+    filter: ["**/*"]
+
+mac:
+  target: dmg
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.inherit.plist
+
+win:
+  target: nsis
+
+linux:
+  target: AppImage
+
+publish:
+  provider: github
+  owner: securevault-team
+  repo: securevault-desktop
