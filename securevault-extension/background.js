@@ -8,16 +8,24 @@ const HOST_NAME = "com.securevault.host";
  */
 function connectToHost() {
     console.log("[SecureVault] Connecting to native host...");
-    nativePort = chrome.runtime.connectNative(HOST_NAME);
+    try {
+        nativePort = chrome.runtime.connectNative(HOST_NAME);
 
-    nativePort.onMessage.addListener(handleNativeMessage);
+        nativePort.onMessage.addListener(handleNativeMessage);
 
-    nativePort.onDisconnect.addListener(() => {
-        console.warn("[SecureVault] Native host disconnected:", chrome.runtime.lastError);
-        nativePort = null;
-        // Optional: Auto-reconnect or wait for user action?
-        // We'll leave it null so popup checks and reconnects if needed.
-    });
+        nativePort.onDisconnect.addListener(() => {
+            if (chrome.runtime.lastError) {
+                console.error("[SecureVault] Native host disconnected with error:", chrome.runtime.lastError.message);
+            } else {
+                console.warn("[SecureVault] Native host disconnected cleanly.");
+            }
+            nativePort = null;
+        });
+
+        console.log("[SecureVault] Connected to native host.");
+    } catch (e) {
+        console.error("[SecureVault] Connection failed:", e);
+    }
 }
 
 /**
