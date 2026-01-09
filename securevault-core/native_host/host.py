@@ -7,9 +7,27 @@ import time
 import base64
 
 # Ensure imports work from core
+# Ensure imports work from core
 current_dir = os.path.dirname(os.path.abspath(__file__))
 core_dir = os.path.dirname(current_dir)
 sys.path.append(core_dir)
+
+# --- VENV AUTO-ACTIVATION ---
+# Chrome launches this script with system python. We need to use the venv if dependencies like 'cryptography' are missing.
+try:
+    import cryptography
+except ImportError:
+    # Look for venv
+    venv_python = os.path.join(core_dir, "venv", "bin", "python3")
+    if os.path.exists(venv_python):
+        # Prevent infinite loop if venv is broken
+        if sys.executable != venv_python:
+            # Re-execute this script with the venv python
+            os.execv(venv_python, [venv_python] + sys.argv)
+    else:
+        # Fallback: maybe it's in a different location or deps are global. 
+        # We proceed and let the try/except in main catch the inevitable crash.
+        pass
 
 from app.vault import Vault, VaultError
 from app.webauthn_util import WebAuthnUtil
