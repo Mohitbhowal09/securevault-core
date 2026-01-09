@@ -1,0 +1,32 @@
+{
+    "manifest_version": 3,
+    "name": "SecureVault Autofill",
+    "version": "1.0",
+    "description": "Secure, offline autofill for SecureVault using Native Messaging.",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "nativeMessaging"
+    ],
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_title": "SecureVault"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "scripts/content.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "icons": {
+        "48": "images/icon48.png"
+    }
+}
