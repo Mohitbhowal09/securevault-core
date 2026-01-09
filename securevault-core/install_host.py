@@ -3,7 +3,7 @@ import json
 import sys
 import platform
 
-EXTENSION_ID = "knldjmfmopnpolahpmmgbagdohdnhkik" # Placeholder, we need the actual ID or allow any (dev mode)
+EXTENSION_ID = "egpmlmhbgboabnojpgkceeepomciopcd" # Antigravity (Dev) ID
 # In Dev Mode, Chrome generates an ID based on path. 
 # We usually can't predict it unless we key extensions.
 # For this task, we will instruct the user to update the ID after loading.
